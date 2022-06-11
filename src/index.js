@@ -14,8 +14,30 @@
 // TODO 4:
 // Retornar o erro:  "weight and/or height are not numbers" se os valores de peso ou altura não forem números.
 
-function calculateImc(weight, height) {
-  // TODO: Implemente aqui
+const options = require("./imcResultOptions");
+
+  function calculateImc(weight, height) {
+    if(! weight || ! height){
+      throw new Error("weight and height are required")
+    }
+    if(weight < 0 || height < 0){
+      throw new Error("weight and height cannot be negative")
+    }
+    if(isNaN(weight) || isNaN(height)){
+      throw new Error("weight and/or height are not numbers")
+    }
+
+    const imc = parseInt((weight / ((height * height)/10000)).toFixed(1));
+    const result = options.find(option => imc >= option.min && imc <= option.max);
+    const descrip = result.description
+
+      return {
+        imc : imc,
+        description : descrip
+      }
 }
+
+  const result = calculateImc (70 , 175)
+  console.log(result)
 
 module.exports = calculateImc;
